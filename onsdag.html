@@ -5,61 +5,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
-    <style>
-        img {
-            max-width: 100%;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        body {
-            background-color: rgb(108, 40, 40);
-        }
-
-        .templateModtager {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            max-width: 1000px;
-            margin: 0 auto;
-            grid-gap: 10px;
-        }
-
-        .menu {
-            //border: 1px solid #666;
-            padding: 10px;
-            background-color: antiquewhite;
-
-        }
-
-        /*
-        .menu:nth-child(odd) {
-        background-color: antiquewhite;
-        }
-*/
-
-        h1 {
-            font-family: fantasy;
-            font-size: 1.4em;
-
-        }
-
-        @media screen and (max-width:700px) {
-            .templateModtager {
-                max-width: 100%;
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media screen and (max-width:500px) {
-            .templateModtager {
-                max-width: 100%;
-                grid-template-columns: repeat(1, 1fr);
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-    <div class="templateModtager"></div>
+    <nav>
+        <button id="filter_alle">Alle</button>
+        <button id="filter_forretter">Forretter</button>
+        <button id="filter_hovedretter">Hovedretter</button>
+        <button id="filter_desserter">Dessert</button>
+        <button id="filter_drikkevarer">Drikkevarer</button>
+    </nav>
+
+    <main>
+        <h1 id="overskrift" data-overskrift>Menu</h1>
+        <section class="templateModtager" date-container></section>
+    </main>
 
     <template class="menuTemplate">
        <div class="menu">
@@ -70,38 +33,9 @@
        </div>   
    </template>
 
-
-    <script>
-        let menuer;
-
-        document.addEventListener("DOMContentLoaded", loadJson);
-
-        let modtager = document.querySelector(".templateModtager");
-        let template = document.querySelector(".menuTemplate");
-
-        async function loadJson() {
-            let menuListe = await fetch("menu.json");
-            menuer = await menuListe.json();
-            console.log(menuer);
-            visMenu(menuer);
-        }
+    <script src="javascript.js"></script>
 
 
-        function visMenu(menuer) {
-            menuer.forEach(minMenu => {
-                let klon = template.cloneNode(true).content;
-                klon.querySelector(".foto").src = "imgs/small/" +
-                    minMenu.billede + "-sm.jpg";
-                klon.querySelector(".foto").alt = "Billede af " + minMenu.navn;
-                klon.querySelector(".navn").textContent = minMenu.navn
-                klon.querySelector(".pris").textContent = minMenu.pris;
-                klon.querySelector(".kortbeskrivelse").textContent = minMenu.kortbeskrivelse;
-
-                modtager.appendChild(klon);
-
-            })
-        }
-    </script>
 
 </body>
 

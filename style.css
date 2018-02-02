@@ -1,0 +1,54 @@
+img {
+    max-width: 100%;
+}
+
+* {
+    margin: 0 auto;
+    max-width: 1024px;
+}
+
+body {
+    background-color: rgb(108, 40, 40);
+
+}
+
+.templateModtager {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px;
+    margin: 0 auto;
+    grid-gap: 10px;
+}
+
+.menu {
+    //border: 1px solid #666;
+    padding: 10px;
+    background-color: antiquewhite;
+
+}
+
+/*
+        .menu:nth-child(odd) {
+        background-color: antiquewhite;
+        }
+*/
+
+h1 {
+    font-family: fantasy;
+
+
+}
+
+@media screen and (max-width:700px) {
+    .templateModtager {
+        max-width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width:500px) {
+    .templateModtager {
+        max-width: 100%;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
