@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        img {
+            max-width: 100%;
+        }
+
+        body {
+            background-color: rgb(108, 40, 40);
+        }
+
+        .templateModtager {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 1000px;
+            margin: 0 auto;
+            grid-gap: 10px;
+        }
+
+        .menu {
+            //border: 1px solid #666;
+            padding: 10px;
+            background-color: antiquewhite;
+
+        }
+
+        /*
+        .menu:nth-child(odd) {
+        background-color: antiquewhite;
+        }
+*/
+
+        h1 {
+            font-family: fantasy;
+            font-size: 1.4em;
+
+        }
+
+        @media screen and (max-width:700px) {
+            .templateModtager {
+                max-width: 100%;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width:500px) {
+            .templateModtager {
+                max-width: 100%;
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html"><button id="filter_alle">Alle</button></a>
+        <a href="filter.html?kategori=forretter"><button id="filter_forretter">Forretter</button></a>
+        <a href="filter.html?kategori=hovedretter"><button id="filter_hovedretter">Hovedretter</button></a>
+        <a href="filter.html?kategori=desserter"><button id="filter_desserter">Dessert</button></a>
+        <a href="filter.html?kategori=drikkevarer"><button id="filter_drikkevarer">Drikkevarer</button></a>
+    </nav>
+
+    <h1 class="overskrift">Menu</h1>
+
+    <div class="templateModtager"></div>
+
+    <template class="menuTemplate">
+       <article class="menu">
+         <a data-single href="">
+            <img class="foto" src="" alt="">
+            <h1 class="navn"></h1>
+            <div>Pris: <span class="pris"></span> kr.</div>
+            <p class="kortbeskrivelse"></p>
+        </a>
+       </article>   
+   </template>
+
+
+    <script>
+        let kategori = location.href.split("=")[1];
+        let menuer;
+
+        document.addEventListener("DOMContentLoaded", loadJson);
+
+        let modtager = document.querySelector(".templateModtager");
+        let template = document.querySelector(".menuTemplate");
+
+        async function loadJson() {
+            let menuListe = await fetch("menu.json");
+            menuer = await menuListe.json();
+            console.log(menuer);
+            visMenu(menuer);
+        }
+
+
+        function visMenu(menuer) {
+            menuer.forEach(minMenu => {
+                if (minMenu.kategori == kategori) {
+                    let klon = template.cloneNode(true).content;
+                    klon.querySelector(".foto").src = "imgs/small/" + minMenu.billede + "-sm.jpg";
+                    klon.querySelector(".foto").alt = "Billede af " + minMenu.navn;
+                    klon.querySelector(".navn").textContent = minMenu.navn
+                    klon.querySelector(".pris").textContent = minMenu.pris;
+                    klon.querySelector(".kortbeskrivelse").textContent = minMenu.kortbeskrivelse;
+                    klon.querySelector("[data-single]").href = "single.html?minMenu=" + minMenu.id;
+                    document.querySelector(".overskrift").textContent = kategori;
+
+                    modtager.appendChild(klon);
+
+                }
+            })
+        }
+    </script>
+
+</body>
+
+</html>

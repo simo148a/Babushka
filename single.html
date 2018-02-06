@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        img {
+            max-width: 100%;
+        }
+
+        body {
+            background-color: rgb(108, 40, 40);
+        }
+
+        .templateModtager {
+            display: grid;
+            /*            grid-template-columns: repeat(1, 1fr);*/
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .menu {
+            //border: 1px solid #666;
+            padding: 10px;
+            background-color: antiquewhite;
+            justify-content: center;
+        }
+
+        h1 {
+            font-family: fantasy;
+            font-size: 1.4em;
+
+        }
+
+        @media screen and (max-width:700px) {
+            .templateModtager {
+                max-width: 100%;
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media screen and (max-width:500px) {
+            .templateModtager {
+                max-width: 100%;
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html"><button id="filter_alle">Alle</button></a>
+        <a href="filter.html?kategori=forretter"><button id="filter_forretter">Forretter</button></a>
+        <a href="filter.html?kategori=hovedretter"><button id="filter_hovedretter">Hovedretter</button></a>
+        <a href="filter.html?kategori=desserter"><button id="filter_desserter">Dessert</button></a>
+        <a href="filter.html?kategori=drikkevarer"><button id="filter_drikkevarer">Drikkevarer</button></a>
+    </nav>
+
+    <h1>Menu</h1>
+
+    <main class="templateModtager">
+        <article class="menu">
+            <img class="foto" data-foto src="" alt="">
+            <h1 class="navn" data-navn></h1>
+            <h3 class="kortbeskrivelse" data-kortbeskrivelse></h3>
+            <p class="langbeskrivelse" data-langbeskrivelse></p>
+            <div>Pris: <span class="pris" data-pris></span> kr.</div>
+        </article>
+    </main>
+
+
+
+
+    <script>
+        let id = location.href.split("=")[1];
+        let menuer;
+
+        document.addEventListener("DOMContentLoaded", loadJson);
+
+
+        async function loadJson() {
+            let menuListe = await fetch("menu.json");
+            menuer = await menuListe.json();
+            console.log(menuer);
+            visMenu(menuer);
+        }
+
+
+        function visMenu(menuer) {
+            let modtager = document.querySelector(".templateModtager");
+            menuer.forEach(minMenu => {
+                if (minMenu.id == id) {
+
+                    modtager.querySelector("[data-foto]").src = "imgs/medium/" + minMenu.billede + "-md.jpg";
+                    modtager.querySelector("[data-foto]").alt = "Billede af " + minMenu.navn;
+                    modtager.querySelector("[data-navn]").textContent = minMenu.navn
+                    modtager.querySelector("[data-pris]").textContent = minMenu.pris;
+                    modtager.querySelector("[data-kortbeskrivelse]").textContent = minMenu.kortbeskrivelse;
+                    modtager.querySelector("[data-langbeskrivelse]").textContent = minMenu.langbeskrivelse;
+                }
+            })
+        }
+    </script>
+
+</body>
+
+</html>
