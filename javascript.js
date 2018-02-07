@@ -1,6 +1,5 @@
         document.addEventListener("DOMContentLoaded", loadJson);
 
-
         let menuer;
         async function loadJson() {
             let menuListe = await fetch("menu.json");
@@ -47,8 +46,32 @@
                 klon.querySelector(".navn").textContent = minMenu.navn
                 klon.querySelector(".pris").textContent = minMenu.pris;
                 klon.querySelector(".kortbeskrivelse").textContent = minMenu.kortbeskrivelse;
+                klon.querySelector("[data-ret]").setAttribute("data-id", minMenu.id);
+                klon.querySelector("[data-ret]").addEventListener("click", showSingle);
 
                 templateModtager.appendChild(klon);
 
             })
+        }
+
+
+        function showSingle() {
+            let myId = this.getAttribute("data-id");
+            let single = menuer.find(menu => {
+                //hvis myId og menu Id matcher, skal indhold vises
+                if (myId == menu.id) {
+                    document.querySelector(".popup").style.visibility = "visible";
+                    document.querySelector("[data-navn]").textContent = menu.navn;
+                    document.querySelector("[data-langbeskrivelse]").textContent = menu.navn;
+                    document.querySelector("[data-billede]").src = "imgs/medium/" + menu.billede + "-md.jpg";
+                    document.querySelector(".close_single").addEventListener("click", hideSingle);
+                }
+            })
+
+
+        }
+
+        function hideSingle() {
+            console.log("Close");
+            document.querySelector(".popup").style.visibility = "hidden";
         }

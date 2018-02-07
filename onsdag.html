@@ -11,6 +11,18 @@
 
 <body>
 
+    <div class="popup">
+        <div class="popup_content">
+            <button class="close_single">Close</button>
+            <h2 class="info" data-navn></h2>
+            <img src="" alt="" class="info" data-billede>
+            <details open>
+                <summary>Beskrivelse</summary>
+                <p class="info" data-langbeskrivelse>Her er beskrivelse</p>
+            </details>
+        </div>
+    </div>
+
     <nav>
         <button id="filter_alle">Alle</button>
         <button id="filter_forretter">Forretter</button>
@@ -24,13 +36,14 @@
         <section class="templateModtager" date-container></section>
     </main>
 
-    <template class="menuTemplate">
-       <div class="menu">
+    <template class="menuTemplate" data-template>
+       <article class="menu" data-ret>
           <img class="foto" src="" alt="">
            <h1 class="navn"></h1>
            <div>Pris: <span class="pris"></span> kr.</div>
            <p class="kortbeskrivelse"></p>
-       </div>   
+        </article>
+          
    </template>
 
     <script src="javascript.js"></script>

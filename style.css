@@ -39,6 +39,24 @@ h1 {
 
 }
 
+.popup {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.6);
+    visibility: hidden;
+}
+
+.popup_content {
+    background: antiquewhite;
+    width: 60vw;
+    position: absolute;
+    top: 10vw;
+    left: 20vw;
+    height: auto;
+
+}
+
 @media screen and (max-width:700px) {
     .templateModtager {
         max-width: 100%;
